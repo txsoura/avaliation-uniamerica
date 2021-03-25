@@ -1,6 +1,7 @@
 package com.uniamerica.avaliation.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="models")
@@ -11,6 +12,9 @@ public class Model {
 
     private long id;
     private String name, version;
+
+    @OneToOne
+    private Brand brand;
 
     public Model() {
     }
@@ -42,5 +46,13 @@ public class Model {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }

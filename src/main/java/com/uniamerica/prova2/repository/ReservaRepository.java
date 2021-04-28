@@ -10,9 +10,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
-    @Query("select r from Reserva r where r.carro = :id and  r.data_retirada >= :data_retirada and r.data_devolucao <= :data_devolucao")
+    @Query("select r from Reserva r where r.carro = :carro and  r.data_retirada >= :data_retirada and r.data_devolucao <= :data_devolucao")
     List<Reserva> searchByDate(
-            @Param("quarto") Carro carro,
+            @Param("carro") Carro carro,
             @Param("data_retirada") LocalDate data_retirada,
             @Param("data_devolucao") LocalDate data_devolucao);
 }

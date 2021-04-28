@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class ReservaService {
     private final ReservaRepository reservaRepository;
@@ -20,7 +19,7 @@ public class ReservaService {
     }
 
     public Reserva store(Reserva reserva) {
-        List<Reserva> available = reservaRepository.searchByDate(reserva.getCarro(),reserva.getData_retirada(), reserva.getData_devolucao());
+        List<Reserva> available = reservaRepository.searchByDate(reserva.getCarro(), reserva.getData_retirada(), reserva.getData_devolucao());
 
         if (available.isEmpty()) {
             return reservaRepository.save(reserva);
@@ -33,9 +32,10 @@ public class ReservaService {
     }
 
     public Reserva finalize(long id) {
-        Optional<Reserva> reserva = show(id);
+        Optional<Reserva> optionalReserva = show(id);
 
-        if (reserva.isPresent()) {
+        if (optionalReserva.isPresent()) {
+            Reserva reserva = optionalReserva.get();
             reserva.setEstado(ReservaEstado.finalizado);
             return reservaRepository.save(reserva);
         } else {
@@ -44,9 +44,10 @@ public class ReservaService {
     }
 
     public Reserva start(long id) {
-        Optional<Reserva> reserva = show(id);
+        Optional<Reserva> optionalReserva = show(id);
 
-        if (reserva.isPresent()) {
+        if (optionalReserva.isPresent()) {
+            Reserva reserva = optionalReserva.get();
             reserva.setEstado(ReservaEstado.em_andamento);
             return reservaRepository.save(reserva);
         } else {
